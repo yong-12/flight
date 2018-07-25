@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using flight.Data.Interfaces;
 using flight.Data.Model;
+using flight.Data.Repisotories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +35,7 @@ namespace flight
                 options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection"))
             );
 
+            services.AddTransient<IAircraftRepository, AircraftRepository>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();

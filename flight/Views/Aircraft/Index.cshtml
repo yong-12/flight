@@ -1,0 +1,55 @@
+﻿@model AircraftViewModel
+
+@*<h2>Index</h2>
+
+    @foreach (var item in Model.Aircrafts)
+    {
+
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail">
+                <img src="@item.Name" alt="" />
+                <div class="caption">
+                    <h3 class="pull-right">@item.Name</h3>
+
+                    <p>@item.FuelComsumption</p>
+                </div>
+                <div class="addToCart text-right">
+                    <p class="button ">
+                        <a class="btn btn-success" id="cartButton" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-drinkId="@item.AircraftId">
+                            Add to cart
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }*@
+ 
+
+<h2>List of Aircraft</h2>
+
+
+@Html.ActionLink("Add Aircraft" , "New", "Aircraft", null, new { @class = "btn btn-primary" })
+
+
+<table id="Aircrafts" class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"> Aircraft </th>
+            <th scope="col"> Fuel Comsumption </th>
+             
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Aircrafts)
+            {
+                <tr>
+                    <td class="row">
+                        @Html.ActionLink(item.Name, "Edit", "Aircraft", new { Id = item.AircraftId }, null)
+                    </td>
+                    <td class="row">@item.FuelComsumption</td>
+                </tr>
+            }
+    </tbody>
+</table>
+<ul></ul>
+ 

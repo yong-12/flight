@@ -1,0 +1,31 @@
+﻿@model Aircraft
+
+<h2>   </h2>
+<h2>   </h2>
+
+<div class="panel panel-primary" style="width:750px;margin:0px auto">
+
+
+    <div class="panel-heading">New Aircraft</div>
+
+    <div class="panel-body">
+
+
+        @using (Html.BeginForm("Save", "Aircraft"))
+        {
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FuelComsumption)
+                @Html.TextBoxFor(m => m.FuelComsumption, new { @class = "form-control" })
+            </div>
+            @Html.HiddenFor(m => m.AircraftId)
+            <button type="submit" class="btn btn-primary"> Save </button>
+        }
+    </div>
+</div>
+ 
+

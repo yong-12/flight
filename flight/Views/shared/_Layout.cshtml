@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
     <link href="~/Content/site.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery/DataTables/jquery.dataTables.js"></script>
+    <script src="~/lib/jquery/DataTables/dataTables.bootstrap.js"></script>
     <title>Flight</title>
 </head>
 <body>
@@ -24,8 +27,9 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li><a asp-controller="Aircraft" asp-action="Index">Aircraft</a></li>
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="Contact" asp-action="Index">Contact Us</a></li> 
+                    <li><a asp-controller="Aircraft" asp-action="Index">Contact Us</a></li>
                 </ul>
 
                 <form class="navbar-form navbar-right" asp-controller="Drink" asp-action="Search" method="get">
