@@ -34,6 +34,12 @@ namespace flight.Controllers
             return View(mv);
         }
 
+        [HttpGet]
+        public IEnumerable<Flight> GetList()
+        {
+            return _flightRepository.Flights.ToList();
+        }
+
         public  ViewResult New()
         {
             var mv = new NewFlightViewModel()

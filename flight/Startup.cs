@@ -39,6 +39,12 @@ namespace flight
             services.AddTransient<IAircraftRepository, AircraftRepository>();
             services.AddTransient<IFlightRepository, FlightRepository>();
             services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver
+                        = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+                });
             // Add framework services.
             //services.AddMvc().AddWebApiConventions(); //Add WebApi
 

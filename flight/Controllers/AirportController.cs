@@ -53,5 +53,12 @@ namespace flight.Controllers
             var airport = _areportrepository.GetAirport(Id);
             return View("AirportForm", airport);
         }
+
+        [HttpGet]
+        public IEnumerable<Airport> GetList()
+        {
+            return _areportrepository.Airports.ToList();
+        }
+
     }
 }

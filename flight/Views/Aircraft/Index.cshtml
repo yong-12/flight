@@ -29,17 +29,20 @@
 
 @Html.ActionLink("Add Aircraft", "New", "Aircraft", null, new { @class = "btn btn-primary" })
 
-
+<br />
+<br />
 <table id="Aircrafts" class="table table-striped">
     <thead>
         <tr>
+            <th scope="col"> AircraftID </th>
             <th scope="col"> Aircraft </th>
             <th scope="col"> Fuel Comsumption </th>
-
+            <th>Edit</th>
+            @*<th>Delete</th>*@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Aircrafts)
+        @*@foreach (var item in Model.Aircrafts)
         {
             <tr>
                 <td class="row">
@@ -47,22 +50,23 @@
                 </td>
                 <td class="row">@item.FuelComsumption</td>
             </tr>
-        }
+        }*@
     </tbody>
 </table>
 <ul></ul>
 
-@*<script>
+<script>
     $(document).ready(function () {
         $("#Aircrafts").DataTable({
             "processing": true, // for show progress bar
-            "serverSide": true, // for process server side
+            "serverSide": false, // for process server side
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
             "ajax": {
                 "url": "/Aircraft/GetList",
                 "type": "Get",
-                "datatype": "json"
+                "datatype": "json",
+                "dataSrc": ""
             },
             "columnDefs":
             [{
@@ -71,13 +75,14 @@
                 "searchable": false
             }],
             "columns": [
-                { "data": "AircraftId", "name": "AircraftId", "autoWidth": true },
-                { "data": "Name", "name": "Name", "autoWidth": true },
-                { "data": "FuelComsumption", "name": "FuelComsumption", "autoWidth": true },
-              
-
+                { "data": "AircraftId", "name": "AircraftId", "autoWidth": false },
+                { "data": "Name", "name": "Name", "autoWidth": false },
+                { "data": "FuelComsumption", "name": "FuelComsumption", "autoWidth": false },
+                {
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Aircraft/Edit/' + full.AircraftId + '">Edit</a>'; }
+                },
             ]
 
         });
     });
-</script>*@ 
+</script> 

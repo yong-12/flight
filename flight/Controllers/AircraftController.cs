@@ -58,7 +58,7 @@ namespace flight.Controllers
         }
 
         [HttpGet]
-        public List<Aircraft> GetList()
+        public IEnumerable<Aircraft> GetList()
         {
             return _aircraftrepository.Aircrafts.ToList();
         }

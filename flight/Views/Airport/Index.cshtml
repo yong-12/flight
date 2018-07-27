@@ -5,18 +5,21 @@
 
 @Html.ActionLink("Add Airport", "New", "Airport", null, new { @class = "btn btn-primary" })
 
+<br />
+<br />
 
 <table id="Airport" class="table table-striped">
     <thead>
         <tr>
+            <th scope="col"> Airport ID</th>
             <th scope="col"> Airport </th>
             <th scope="col"> Latitude </th>
             <th scope="col"> Longitude </th>
-
+            <th scope="col"> Edit </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Airports)
+        @*@foreach (var item in Model.Airports)
         {
             <tr>
                 <td class="row">
@@ -25,6 +28,38 @@
                 <td class="row">@item.Latitude</td>
                 <td class="row">@item.Longitude</td>
             </tr>
-        }
+        }*@
     </tbody>
 </table>
+<script>
+    $(document).ready(function () {
+        $("#Airport").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": false, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/Airport/GetList",
+                "type": "Get",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columnDefs":
+            [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "columns": [
+                { "data": "AirportId", "name": "AirportId", "autoWidth": false },
+                { "data": "Name", "name": "Name", "autoWidth": false },
+                { "data": "Latitude", "name": "Latitude", "autoWidth": false },
+                { "data": "Longitude", "name": "Longitude", "autoWidth": false },
+                {
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Airport/Edit/' + full.AirportId + '">Edit</a>'; }
+                },
+            ]
+
+        });
+    });
+</script> 
