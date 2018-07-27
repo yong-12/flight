@@ -1,0 +1,35 @@
+﻿@model Airport
+
+<h2>   </h2>
+<h2>   </h2>
+
+<div class="panel panel-primary" style="width:750px;margin:0px auto">
+
+
+    <div class="panel-heading">New Airport</div>
+
+    <div class="panel-body">
+
+
+   @using (Html.BeginForm("Save", "Airport"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Latitude)
+            @Html.TextBoxFor(m => m.Latitude, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Longitude)
+            @Html.TextBoxFor(m => m.Longitude, new { @class = "form-control" })
+        </div>
+        @Html.HiddenFor(m => m.AirportId)
+        <button type="submit" class="btn btn-primary"> Save </button>
+}
+    </div>
+</div>
+
+

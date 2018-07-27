@@ -1,0 +1,30 @@
+﻿@model AirportViewModel
+
+<h2>List of Airport</h2>
+
+
+@Html.ActionLink("Add Airport", "New", "Airport", null, new { @class = "btn btn-primary" })
+
+
+<table id="Airport" class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"> Airport </th>
+            <th scope="col"> Latitude </th>
+            <th scope="col"> Longitude </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Airports)
+        {
+            <tr>
+                <td class="row">
+                    @Html.ActionLink(item.Name, "Edit", "Airport", new { Id = item.AirportId }, null)
+                </td>
+                <td class="row">@item.Latitude</td>
+                <td class="row">@item.Longitude</td>
+            </tr>
+        }
+    </tbody>
+</table>

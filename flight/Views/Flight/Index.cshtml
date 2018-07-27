@@ -1,0 +1,37 @@
+﻿@model FlightsViewModel
+
+<h2>List O Flights</h2>
+
+
+@Html.ActionLink("Add Flight", "New", "Flight", null, new { @class = "btn btn-primary" })
+
+
+
+<table id="Aircrafts" class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"> Airport </th>
+            <th scope="col"> AirportDepart </th>
+            <th scope="col"> AirportDestin </th>
+            <th scope="col"> FuelNeeded </th>
+            <th scope="col"> Distance </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Flights)
+        {
+        <tr>
+            <td class="row">
+                @Html.ActionLink(item.Aircraft.Name, "Edit", "Airport", new { Id = item.FlightId }, null)
+            </td>
+            <td class="row">
+                @Html.ActionLink(item.AirportDepart.Name, "Edit", "Airport", new { Id = item.FlightId }, null)
+            </td>
+            <td class="row">@item.AirportDepart.Name</td>
+            <td class="row">@item.AirportDestin.Name</td>
+            <td class="row">@item.FuelNeeded</td>
+            <td class="row">@item.Distance</td>
+        </tr>
+        }
+    </tbody>
+</table>

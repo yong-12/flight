@@ -1,5 +1,6 @@
 ﻿using flight.Data.Interfaces;
 using flight.Data.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

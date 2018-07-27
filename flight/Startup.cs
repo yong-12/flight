@@ -35,8 +35,13 @@ namespace flight
                 options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection"))
             );
 
+            services.AddTransient<IAirportRepository, AirportRepository>();
             services.AddTransient<IAircraftRepository, AircraftRepository>();
+            services.AddTransient<IFlightRepository, FlightRepository>();
             services.AddMvc();
+            // Add framework services.
+            //services.AddMvc().AddWebApiConventions(); //Add WebApi
+
             services.AddMemoryCache();
             services.AddSession();
         }

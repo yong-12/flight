@@ -1,5 +1,4 @@
 ﻿@model AircraftViewModel
-
 @*<h2>Index</h2>
 
     @foreach (var item in Model.Aircrafts)
@@ -23,12 +22,12 @@
             </div>
         </div>
     }*@
- 
+
 
 <h2>List of Aircraft</h2>
 
 
-@Html.ActionLink("Add Aircraft" , "New", "Aircraft", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Add Aircraft", "New", "Aircraft", null, new { @class = "btn btn-primary" })
 
 
 <table id="Aircrafts" class="table table-striped">
@@ -36,20 +35,49 @@
         <tr>
             <th scope="col"> Aircraft </th>
             <th scope="col"> Fuel Comsumption </th>
-             
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Aircrafts)
-            {
-                <tr>
-                    <td class="row">
-                        @Html.ActionLink(item.Name, "Edit", "Aircraft", new { Id = item.AircraftId }, null)
-                    </td>
-                    <td class="row">@item.FuelComsumption</td>
-                </tr>
-            }
+        {
+            <tr>
+                <td class="row">
+                    @Html.ActionLink(item.Name, "Edit", "Aircraft", new { Id = item.AircraftId }, null)
+                </td>
+                <td class="row">@item.FuelComsumption</td>
+            </tr>
+        }
     </tbody>
 </table>
 <ul></ul>
- 
+
+@*<script>
+    $(document).ready(function () {
+        $("#Aircrafts").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/Aircraft/GetList",
+                "type": "Get",
+                "datatype": "json"
+            },
+            "columnDefs":
+            [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "columns": [
+                { "data": "AircraftId", "name": "AircraftId", "autoWidth": true },
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "FuelComsumption", "name": "FuelComsumption", "autoWidth": true },
+              
+
+            ]
+
+        });
+    });
+</script>*@ 

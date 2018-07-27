@@ -56,5 +56,11 @@ namespace flight.Controllers
             var aircraft =  _aircraftrepository.GetAircraft(Id);
             return View("AircraftForm", aircraft);
         }
+
+        [HttpGet]
+        public List<Aircraft> GetList()
+        {
+            return _aircraftrepository.Aircrafts.ToList();
+        }
     }
 }
