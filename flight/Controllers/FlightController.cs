@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using flight.Data.Interfaces;
+using flight.Data.Model;
 using flight.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,21 +46,76 @@ namespace flight.Controllers
 
         public ViewResult Save(NewFlightViewModel FlightMV)
         {
-            var a = _airportRepository.GetAirport(FlightMV.Flight.AirportDepartId);
-            var b = _airportRepository.GetAirport(FlightMV.Flight.AirportDestinId);
-            var resultat = DistanceTo(a.Latitude, a.Longitude, b.Latitude, b.Longitude);
-            return View("Index");
+            var NewFlight = new Flight();
+            NewFlight = FlightMV.Flight;
+            if (FlightMV.Flight.FlightId == 0 )
+            {
+                _flightRepository.AddFlight(NewFlight);
+            }
+            else
+                _flightRepository.UpdateFlight(NewFlight);
+
+            var mv = new FlightsViewModel()
+            {
+                Flights = _flightRepository.Flights.OrderBy(f => f.FlightId)
+            };
+
+            return View("Index", mv);
         }
         
+        public ViewResult Edit(int Id)
+        {
+
+            var mv = new NewFlightViewModel()
+            {
+                Flight = _flightRepository.GetFlight(Id),
+                Aircrafts = _aircraftRepository.Aircrafts.OrderBy(a => a.AircraftId),
+                Airport = _airportRepository.Airports.OrderBy(a => a.Name)
+            };
+             
+            return View("FlightForm",mv);
+        }
 
         [HttpGet]
-        [Route("/[controller]/Distance/{departId:int}/{destinationId:int}")]
-        public double CalculerDistance(int departId, int destinationId)
+        [Route("/[controller]/Edit/calculer/{depart}/{destination}/{Aircraf}")]
+        [Route("/[controller]/calculer/{depart}/{destination}/{Aircraf}")]
+        public IDictionary<string, string> CalculerDistanceAndConsumption(int depart, int destination, int Aircraf)
         {
-            if (departId > 0 && destinationId > 0)
+            // Fonction avec Dictionary
+            var dictionary = new Dictionary<string, string>();
+            var _distance = CalculerDistance(depart, destination);
+            dictionary.Add("distance", Convert.ToString(_distance).Replace('.',','));
+            var _consumption = Consumption(_distance, Aircraf);
+            dictionary.Add("consumption", Convert.ToString(_consumption).Replace('.', ','));
+            return dictionary;
+        }
+
+        [HttpGet]
+        [Route("/[controller]/Consumption/{Distance}/{AircrafId}")]
+        public double Consumption(double Distance , int AircrafId)
+        {
+            if (Distance> 0 && AircrafId > 0)
             {
-                var airportD = _airportRepository.GetAirport(departId);
-                var airportA = _airportRepository.GetAirport(destinationId);
+                var Airraft = _aircraftRepository.GetAircraft(AircrafId);
+                if(Airraft != null)
+                {
+                    if(Airraft.FuelComsumption > 0)
+                    {
+                        return Distance / Airraft.FuelComsumption;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        [HttpGet]
+        [Route("/[controller]/Distance/{depart}/{destination}")]
+        public double CalculerDistance(int depart, int destination)
+        {
+            if (depart > 0 && destination > 0)
+            {
+                var airportD = _airportRepository.GetAirport(depart);
+                var airportA = _airportRepository.GetAirport(destination);
                 var resultat = DistanceTo(airportD.Latitude, airportD.Longitude, airportA.Latitude, airportA.Longitude);
                 return resultat;
             }
@@ -67,7 +123,7 @@ namespace flight.Controllers
                 return 0;
         }
 
-        public static double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
+        private static double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
         {
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;

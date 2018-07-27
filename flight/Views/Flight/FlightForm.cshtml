@@ -25,8 +25,8 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(m => m.Flight.AirportDestinId)
-                @Html.DropDownListFor(m => m.Flight.AirportDestinId, new SelectList(Model.Airport, "AirportId", "Name"), "Select Airport Depart", new { @class = "form-control" })
+                @Html.LabelFor(m => m.Flight.AirportDestinationId)
+                @Html.DropDownListFor(m => m.Flight.AirportDestinationId, new SelectList(Model.Airport, "AirportId", "Name"), "Select Airport Depart", new { @class = "form-control" })
             </div>
 
             <div class="form-group">
@@ -49,41 +49,80 @@
     jQuery(document).ready(function () {
 
         $("#Flight_AirportDepartId").change(function () {
-            if (!$(this).val()) {
+            if ($(this).val()) {
                 var AirportDepart = $(this).val()
             } else {
                 var AirportDepart = 0
             }
-            if (!$(this).val()) {
-                var AirportDestin = $('#Flight_AirportDestinId').val()
+            if ($('#Flight_AirportDestinationId').val()) {
+                var AirportDestin = $('#Flight_AirportDestinationId').val()
             } else {
                 var AirportDestin = 0
             }
-            $.ajax({ 
-                url: "Distance/" + AirportDepart + "/" + AirportDestin,
+            if ($('#Flight_AircraftId').val()) {
+                var aircraft = $('#Flight_AircraftId').val()
+            } else {
+                var aircraft = 0
+            }
+            $.ajax({  
+                url: "calculer/" + AirportDepart + "/" + AirportDestin + "/" + aircraft,
                 success: function (msg) {
-                    $('#Flight_Distance').val(msg) 
+                    //alert(msg)  
+                    $('#Flight_Distance').val(msg['distance']);
+                    $('#Flight_FuelNeeded').val(msg['consumption']);
                 }
             });
         });
 
-
-        $("#Flight_AirportDestinId").change(function () {
-            if (!$(this).val()) {
+        $("#Flight_AirportDestinationId").change(function () {
+            if ($(this).val()) {
                 var AirportDestin = $(this).val()
             } else {
                 var AirportDestin = 0
             }
-            if (!$(this).val()) {
-                var AirportDestin = $('#Flight_AirportDepartId').val()
+            if ($('#Flight_AirportDepartId').val()) {
+                var AirportDepart = $('#Flight_AirportDepartId').val()
+            } else {
+                var AirportDepart = 0
+            }
+            if ($('#Flight_AircraftId').val()) {
+                var aircraft = $('#Flight_AircraftId').val()
+            } else {
+                var aircraft = 0
+            }
+            $.ajax({ 
+                url: "calculer/" + AirportDepart + "/" + AirportDestin + "/" + aircraft,
+                success: function (msg) {
+                    //alert(msg)  
+                    $('#Flight_Distance').val(msg['distance']);
+                    $('#Flight_FuelNeeded').val(msg['consumption']);
+                }
+            });
+        });
+
+        $("#Flight_AircraftId").change(function () {
+            if ($(this).val()) {
+                var aircraft = $(this).val()
+            } else {
+                var aircraft = 0
+            }
+            if ($('#Flight_AirportDepartId').val()) {
+                var AirportDepart = $('#Flight_AirportDepartId').val()
+            } else {
+                var AirportDepart = 0
+            }
+            if ($('#Flight_AirportDestinationId').val()) {
+                var AirportDestin = $('#Flight_AirportDestinationId').val()
             } else {
                 var AirportDestin = 0
             }
             $.ajax({ 
-                url: "Distance/" + AirportDestin + "/" + AirportDestin,
+                url: "calculer/" + AirportDepart + "/" + AirportDestin + "/" + aircraft,
                 success: function (msg) {
-                    $('#Flight_Distance').val(msg) 
-                }
+                    //console.log(msg);  
+                    $('#Flight_Distance').val(msg['distance']);
+                    $('#Flight_FuelNeeded').val(msg['consumption']);
+                 }
             });
         });
 

@@ -11,8 +11,8 @@ using System;
 namespace flight.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180725194808_addFlightsModel")]
-    partial class addFlightsModel
+    [Migration("20180727172305_initail")]
+    partial class initail
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,8 @@ namespace flight.Migrations
 
                     b.Property<double>("FuelComsumption");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("AircraftId");
 
@@ -56,11 +57,11 @@ namespace flight.Migrations
                     b.Property<int>("FlightId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AircraftId");
+                    b.Property<int>("AircraftId");
 
-                    b.Property<int?>("AirportDepartAirportId");
+                    b.Property<int>("AirportDepartId");
 
-                    b.Property<int?>("AirportDestinAirportId");
+                    b.Property<int>("AirportDestinationId");
 
                     b.Property<double>("Distance");
 
@@ -70,9 +71,9 @@ namespace flight.Migrations
 
                     b.HasIndex("AircraftId");
 
-                    b.HasIndex("AirportDepartAirportId");
+                    b.HasIndex("AirportDepartId");
 
-                    b.HasIndex("AirportDestinAirportId");
+                    b.HasIndex("AirportDestinationId");
 
                     b.ToTable("Flights");
                 });
@@ -81,15 +82,18 @@ namespace flight.Migrations
                 {
                     b.HasOne("flight.Data.Model.Aircraft", "Aircraft")
                         .WithMany()
-                        .HasForeignKey("AircraftId");
+                        .HasForeignKey("AircraftId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("flight.Data.Model.Airport", "AirportDepart")
                         .WithMany()
-                        .HasForeignKey("AirportDepartAirportId");
+                        .HasForeignKey("AirportDepartId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("flight.Data.Model.Airport", "AirportDestin")
+                    b.HasOne("flight.Data.Model.Airport", "AirportDestination")
                         .WithMany()
-                        .HasForeignKey("AirportDestinAirportId");
+                        .HasForeignKey("AirportDestinationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

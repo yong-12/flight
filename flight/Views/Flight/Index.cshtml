@@ -10,10 +10,10 @@
 <table id="Aircrafts" class="table table-striped">
     <thead>
         <tr>
-            <th scope="col"> Airport </th>
-            <th scope="col"> AirportDepart </th>
-            <th scope="col"> AirportDestin </th>
-            <th scope="col"> FuelNeeded </th>
+            <th scope="col"> Aircraft </th>
+            <th scope="col"> Airport Depart </th>
+            <th scope="col"> Airport Destination </th>
+            <th scope="col"> Fuel Needed </th>
             <th scope="col"> Distance </th>
         </tr>
     </thead>
@@ -22,15 +22,15 @@
         {
         <tr>
             <td class="row">
-                @Html.ActionLink(item.Aircraft.Name, "Edit", "Airport", new { Id = item.FlightId }, null)
-            </td>
-            <td class="row">
-                @Html.ActionLink(item.AirportDepart.Name, "Edit", "Airport", new { Id = item.FlightId }, null)
+                @item.Aircraft.Name
             </td>
             <td class="row">@item.AirportDepart.Name</td>
-            <td class="row">@item.AirportDestin.Name</td>
+            <td class="row">@item.AirportDestination.Name</td>
             <td class="row">@item.FuelNeeded</td>
             <td class="row">@item.Distance</td>
+            <td class="row"> 
+                @Html.ActionLink( "Edit" , "Edit", "Flight", new { Id = item.FlightId}, new { @class = "glyphicon glyphicon-edit" })
+            </td>
         </tr>
         }
     </tbody>

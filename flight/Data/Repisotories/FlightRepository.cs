@@ -18,7 +18,7 @@ namespace flight.Data.Repisotories
         IEnumerable<Flight> IFlightRepository.Flights =>
             _appDbContext.Flights.Include( a => a.Aircraft)
                                   .Include(a => a.AirportDepart)
-                                  .Include(a => a.AirportDestin)
+                                  .Include(a => a.AirportDestination)
             .OrderBy(f => f.FlightId);
 
         void IFlightRepository.AddFlight(Flight flight)
@@ -31,7 +31,7 @@ namespace flight.Data.Repisotories
         {
             return _appDbContext.Flights.Include(a => a.Aircraft)
                                   .Include(a => a.AirportDepart)
-                                  .Include(a => a.AirportDestin)
+                                  .Include(a => a.AirportDestination)
                                   .FirstOrDefault(f => f.FlightId == Id);
         }
 
@@ -41,7 +41,7 @@ namespace flight.Data.Repisotories
             if (flightDB != null)
             {
                 flightDB.AirportDepart = flight.AirportDepart;
-                flightDB.AirportDestin = flight.AirportDestin;
+                flightDB.AirportDestination = flight.AirportDestination;
                 flightDB.Aircraft = flight.Aircraft;
                 flightDB.FuelNeeded = flight.FuelNeeded;
                 flightDB.Distance = flight.Distance;

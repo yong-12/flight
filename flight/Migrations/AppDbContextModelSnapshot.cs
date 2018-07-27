@@ -60,7 +60,7 @@ namespace flight.Migrations
 
                     b.Property<int>("AirportDepartId");
 
-                    b.Property<int>("AirportDestinId");
+                    b.Property<int>("AirportDestinationId");
 
                     b.Property<double>("Distance");
 
@@ -72,7 +72,7 @@ namespace flight.Migrations
 
                     b.HasIndex("AirportDepartId");
 
-                    b.HasIndex("AirportDestinId");
+                    b.HasIndex("AirportDestinationId");
 
                     b.ToTable("Flights");
                 });
@@ -89,9 +89,9 @@ namespace flight.Migrations
                         .HasForeignKey("AirportDepartId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("flight.Data.Model.Airport", "AirportDestin")
+                    b.HasOne("flight.Data.Model.Airport", "AirportDestination")
                         .WithMany()
-                        .HasForeignKey("AirportDestinId")
+                        .HasForeignKey("AirportDestinationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

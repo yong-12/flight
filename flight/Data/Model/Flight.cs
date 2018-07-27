@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,20 +12,22 @@ namespace flight.Data.Model
         public int FlightId { get; set; }
 
         public Aircraft Aircraft { get; set; }
+
         [Display(Name ="Aircraft")]
         public  int AircraftId { get; set; }
 
-        public Airport AirportDepart { get; set; }
+        public virtual Airport AirportDepart { get; set; }
         [Display(Name ="Airport Depart")]
         public int AirportDepartId { get; set; }
 
-        public Airport AirportDestin { get; set; }
+        public virtual Airport AirportDestination { get; set; }
         [Display(Name ="Airport Destination")]
-        public int AirportDestinId { get; set; }
+        public int AirportDestinationId { get; set; }
 
         [Display(Name = "Fuel Needed")]
         public double FuelNeeded { get; set; }
 
+        [Display(Name = "Distance (Km)")]
         public double Distance { get; set; }
     }
 }
