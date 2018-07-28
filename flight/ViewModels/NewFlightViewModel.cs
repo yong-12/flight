@@ -8,7 +8,18 @@ namespace flight.ViewModels
 {
     public class NewFlightViewModel
     {
-        public Flight Flight { get; set; }
+        public int FlightId { get; set; }
+        
+        public int AircraftId { get; set; }
+
+        public int AirportDepartId { get; set; }
+
+        public int AirportDestinationId { get; set; }
+
+        public double FuelNeeded { get; set; }
+
+        public double Distance { get; set; }
+
         public IEnumerable<Aircraft> Aircrafts { get; set;}
         public IEnumerable<Airport> Airport { get; set;}
 

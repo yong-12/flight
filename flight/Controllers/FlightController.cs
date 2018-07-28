@@ -50,16 +50,34 @@ namespace flight.Controllers
             return View("FlightForm", mv);
         }
 
-        public ViewResult Save(NewFlightViewModel FlightMV)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ViewResult Save(Flight FlightMV)
         {
-            var NewFlight = new Flight();
-            NewFlight = FlightMV.Flight;
-            if (FlightMV.Flight.FlightId == 0 )
+            if (!ModelState.IsValid)
             {
-                _flightRepository.AddFlight(NewFlight);
+                var NewFlightMV = new NewFlightViewModel()
+                {
+                    AircraftId = FlightMV.AircraftId,
+                    AirportDepartId = FlightMV.AirportDepartId,
+                    AirportDestinationId = FlightMV.AirportDestinationId,
+                    Distance=FlightMV.Distance,
+                    FuelNeeded = FlightMV.FuelNeeded,
+                    Aircrafts = _aircraftRepository.Aircrafts.OrderBy(a => a.AircraftId),
+                    Airport = _airportRepository.Airports.OrderBy(a => a.Name)
+                };
+
+                return View("FlightForm", NewFlightMV);
+            }
+            //var NewFlight = new Flight();
+            //NewFlight = FlightMV.Flight;
+            if (FlightMV.FlightId == 0 )
+            {
+                _flightRepository.AddFlight(FlightMV);
             }
             else
-                _flightRepository.UpdateFlight(NewFlight);
+                _flightRepository.UpdateFlight(FlightMV);
+
 
             var mv = new FlightsViewModel()
             {
@@ -71,10 +89,16 @@ namespace flight.Controllers
         
         public ViewResult Edit(int Id)
         {
+            var FlightMV = _flightRepository.GetFlight(Id);
 
             var mv = new NewFlightViewModel()
             {
-                Flight = _flightRepository.GetFlight(Id),
+                AircraftId = FlightMV.AircraftId,
+                AirportDepartId = FlightMV.AirportDepartId,
+                AirportDestinationId = FlightMV.AirportDestinationId,
+                Distance = FlightMV.Distance,
+                FuelNeeded = FlightMV.FuelNeeded,
+
                 Aircrafts = _aircraftRepository.Aircrafts.OrderBy(a => a.AircraftId),
                 Airport = _airportRepository.Airports.OrderBy(a => a.Name)
             };
@@ -129,7 +153,7 @@ namespace flight.Controllers
                 return 0;
         }
 
-        private static double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
+        private  double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
         {
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;

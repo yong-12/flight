@@ -40,6 +40,14 @@ namespace flight.Controllers
         [HttpPost]
         public  ActionResult Save(Aircraft aircraft)
         {
+            //validation Form 
+            if (!ModelState.IsValid)
+            {
+                return View("AircraftForm", aircraft);
+            }
+
+            //If is new aircraft we save it in the data base
+            //else we update the aircraft 
             if (aircraft.AircraftId ==0)
             {
                 _aircraftrepository.Add(aircraft);

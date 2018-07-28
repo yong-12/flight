@@ -48,3 +48,11 @@ a.remove:hover{
 .carousel img {
     min-width: 100%;
 }
+
+.field-validation-error{
+    color : red
+}
+
+.input-validation-error{
+    border :2px solid red;
+}

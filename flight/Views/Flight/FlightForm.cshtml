@@ -16,30 +16,35 @@
         {
             @Html.AntiForgeryToken()
             <div class="form-group">
-                @Html.LabelFor(m => m.Flight.AircraftId)
-                @Html.DropDownListFor(m => m.Flight.AircraftId, new SelectList(Model.Aircrafts, "AircraftId", "Name"), "Select Aircraft", new { @class = "form-control" })
+                @Html.LabelFor(m => m.AircraftId)
+                @Html.DropDownListFor(m => m.AircraftId, new SelectList(Model.Aircrafts, "AircraftId", "Name"), "Select Aircraft", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.AircraftId)
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Flight.AirportDepartId)
-                @Html.DropDownListFor(m => m.Flight.AirportDepartId, new SelectList(Model.Airport, "AirportId", "Name"), "Select Airport Depart", new { @class = "form-control" })
+                @Html.LabelFor(m => m.AirportDepartId)
+                @Html.DropDownListFor(m => m.AirportDepartId, new SelectList(Model.Airport, "AirportId", "Name"), "Select Airport Depart", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.AirportDepartId)
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(m => m.Flight.AirportDestinationId)
-                @Html.DropDownListFor(m => m.Flight.AirportDestinationId, new SelectList(Model.Airport, "AirportId", "Name"), "Select Airport Depart", new { @class = "form-control" })
+                @Html.LabelFor(m => m.AirportDestinationId)
+                @Html.DropDownListFor(m => m.AirportDestinationId, new SelectList(Model.Airport, "AirportId", "Name"), "Select Airport Depart", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.AirportDestinationId)
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(m => m.Flight.Distance)
-                @Html.TextBoxFor(m => m.Flight.Distance, new { @class = "form-control" })
+                @Html.LabelFor(m => m.Distance)
+                @Html.TextBoxFor(m => m.Distance, new { @class = "form-control", @readonly = "readonly" } )
+                @Html.ValidationMessageFor(m => m.Distance)
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(m => m.Flight.FuelNeeded)
-                @Html.TextBoxFor(m => m.Flight.FuelNeeded, new { @class = "form-control" })
+                @Html.LabelFor(m => m.FuelNeeded)
+                @Html.TextBoxFor(m => m.FuelNeeded, new { @class = "form-control", @readonly = "readonly"  })
+                @Html.ValidationMessageFor(m => m.FuelNeeded)
             </div>
 
-            @Html.HiddenFor(m => m.Flight.FlightId)
+            @Html.HiddenFor(m => m.FlightId)
             <button type="submit" class="btn btn-primary"> Save </button>
         }
     </div>
@@ -48,19 +53,19 @@
 <script>
     jQuery(document).ready(function () {
 
-        $("#Flight_AirportDepartId").change(function () {
+        $("#AirportDepartId").change(function () {
             if ($(this).val()) {
                 var AirportDepart = $(this).val()
             } else {
                 var AirportDepart = 0
             }
-            if ($('#Flight_AirportDestinationId').val()) {
-                var AirportDestin = $('#Flight_AirportDestinationId').val()
+            if ($('#AirportDestinationId').val()) {
+                var AirportDestin = $('#AirportDestinationId').val()
             } else {
                 var AirportDestin = 0
-            }
-            if ($('#Flight_AircraftId').val()) {
-                var aircraft = $('#Flight_AircraftId').val()
+            } 
+            if ($('#AircraftId').val()) {
+                var aircraft = $('#AircraftId').val()
             } else {
                 var aircraft = 0
             }
@@ -68,25 +73,25 @@
                 url: "calculer/" + AirportDepart + "/" + AirportDestin + "/" + aircraft,
                 success: function (msg) {
                     //alert(msg)  
-                    $('#Flight_Distance').val(msg['distance']);
-                    $('#Flight_FuelNeeded').val(msg['consumption']);
+                    $('#Distance').val(msg['distance']);
+                    $('#FuelNeeded').val(msg['consumption']);
                 }
             });
         });
 
-        $("#Flight_AirportDestinationId").change(function () {
+        $("#AirportDestinationId").change(function () {
             if ($(this).val()) {
                 var AirportDestin = $(this).val()
             } else {
                 var AirportDestin = 0
             }
-            if ($('#Flight_AirportDepartId').val()) {
-                var AirportDepart = $('#Flight_AirportDepartId').val()
+            if ($('#AirportDepartId').val()) {
+                var AirportDepart = $('#AirportDepartId').val()
             } else {
                 var AirportDepart = 0
             }
-            if ($('#Flight_AircraftId').val()) {
-                var aircraft = $('#Flight_AircraftId').val()
+            if ($('#AircraftId').val()) {
+                var aircraft = $('#AircraftId').val()
             } else {
                 var aircraft = 0
             }
@@ -94,25 +99,25 @@
                 url: "calculer/" + AirportDepart + "/" + AirportDestin + "/" + aircraft,
                 success: function (msg) {
                     //alert(msg)  
-                    $('#Flight_Distance').val(msg['distance']);
-                    $('#Flight_FuelNeeded').val(msg['consumption']);
+                    $('#Distance').val(msg['distance']);
+                    $('#FuelNeeded').val(msg['consumption']);
                 }
             });
         });
 
-        $("#Flight_AircraftId").change(function () {
+        $("#AircraftId").change(function () {
             if ($(this).val()) {
                 var aircraft = $(this).val()
             } else {
                 var aircraft = 0
             }
-            if ($('#Flight_AirportDepartId').val()) {
-                var AirportDepart = $('#Flight_AirportDepartId').val()
+            if ($('#AirportDepartId').val()) {
+                var AirportDepart = $('#AirportDepartId').val()
             } else {
                 var AirportDepart = 0
             }
-            if ($('#Flight_AirportDestinationId').val()) {
-                var AirportDestin = $('#Flight_AirportDestinationId').val()
+            if ($('#AirportDestinationId').val()) {
+                var AirportDestin = $('#AirportDestinationId').val()
             } else {
                 var AirportDestin = 0
             }
@@ -120,8 +125,8 @@
                 url: "calculer/" + AirportDepart + "/" + AirportDestin + "/" + aircraft,
                 success: function (msg) {
                     //console.log(msg);  
-                    $('#Flight_Distance').val(msg['distance']);
-                    $('#Flight_FuelNeeded').val(msg['consumption']);
+                    $('#Distance').val(msg['distance']);
+                    $('#FuelNeeded').val(msg['consumption']);
                  }
             });
         });

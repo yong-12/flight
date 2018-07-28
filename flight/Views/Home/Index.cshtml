@@ -1,6 +1,29 @@
-﻿
+﻿@model FlightsViewModel
+
 @Html.Partial("Carousel");
 
 <h2>Prefered flight of the week</h2>
 <h4>Clients preferences - just for you ! </h4>
- 
+
+    @foreach (var item in Model.Flights)
+    {
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail">
+                <img src="@item.Aircraft.Name" alt="" />
+                <div class="caption">
+                    <h3 class="pull-right">@item.AirportDepart.Name</h3>
+                    <h3>
+                        <a asp-controller="Flight" asp-action="Edit" asp-route-Id="@item.FlightId">@item.Aircraft.Name</a>
+                    </h3>
+                    <p>@item.AirportDestination.Name</p>
+                </div>
+                <div class="addToCart text-right">
+                    <p class="button ">
+                        <a class="btn btn-success" id="cartButton" asp-controller="Flight" asp-action="Edit" asp-route-Id="@item.FlightId">
+                            Update Flight
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }

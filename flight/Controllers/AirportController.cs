@@ -37,6 +37,11 @@ namespace flight.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(Airport airport)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("AirportForm", airport);
+            }
+        
             if (airport.AirportId == 0)
             {
                 _areportrepository.Add(airport);

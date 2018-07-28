@@ -12,9 +12,11 @@ namespace flight.Data.Model
 
         [Required]
         [Display(Name ="Aircraft Name")]
+        [StringLength(255)]
         public string Name { get; set; }
 
         [Required]
+        [Range(1,10000000)]
         [Display(Name = "Fuel Comsumption")]
         public Double FuelComsumption { get; set; }
     }
