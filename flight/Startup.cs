@@ -44,10 +44,7 @@ namespace flight
                 {
                     options.SerializerSettings.ContractResolver
                         = new Newtonsoft.Json.Serialization.DefaultContractResolver();
-                });
-            // Add framework services.
-            //services.AddMvc().AddWebApiConventions(); //Add WebApi
-
+                }); 
             services.AddMemoryCache();
             services.AddSession();
         }
@@ -61,17 +58,7 @@ namespace flight
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
-            app.UseMvcWithDefaultRoute();
-
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
+            app.UseMvcWithDefaultRoute(); 
         }
     }
 }

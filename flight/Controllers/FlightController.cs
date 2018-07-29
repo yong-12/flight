@@ -16,6 +16,12 @@ namespace flight.Controllers
         private readonly IAircraftRepository _aircraftRepository;
         private readonly IAirportRepository _airportRepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="flightRepository"></param>
+        /// <param name="aircraftRepository"></param>
+        /// <param name="airportRepository"></param>
         public FlightController(IFlightRepository flightRepository,
                                 IAircraftRepository aircraftRepository,
                                 IAirportRepository airportRepository)
@@ -25,6 +31,11 @@ namespace flight.Controllers
             _airportRepository = airportRepository;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             var mv = new FlightsViewModel()
@@ -34,12 +45,21 @@ namespace flight.Controllers
             return View(mv);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Flight> GetList()
         {
             return _flightRepository.Flights.ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public  ViewResult New()
         {
             var mv = new NewFlightViewModel()
@@ -50,6 +70,11 @@ namespace flight.Controllers
             return View("FlightForm", mv);
         }
 
+        /// <summary>
+        /// Save or update flight data
+        /// </summary>
+        /// <param name="FlightMV"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ViewResult Save(Flight FlightMV)
@@ -68,9 +93,8 @@ namespace flight.Controllers
                 };
 
                 return View("FlightForm", NewFlightMV);
-            }
-            //var NewFlight = new Flight();
-            //NewFlight = FlightMV.Flight;
+            } 
+
             if (FlightMV.FlightId == 0 )
             {
                 _flightRepository.AddFlight(FlightMV);
@@ -87,6 +111,11 @@ namespace flight.Controllers
             return View("Index", mv);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public ViewResult Edit(int Id)
         {
             var FlightMV = _flightRepository.GetFlight(Id);
@@ -106,6 +135,13 @@ namespace flight.Controllers
             return View("FlightForm",mv);
         }
 
+        /// <summary>
+        /// Distance & Consumption Call Function
+        /// </summary>
+        /// <param name="depart"></param>
+        /// <param name="destination"></param>
+        /// <param name="Aircraf"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("/[controller]/Edit/calculer/{depart}/{destination}/{Aircraf}")]
         [Route("/[controller]/calculer/{depart}/{destination}/{Aircraf}")]
@@ -120,6 +156,12 @@ namespace flight.Controllers
             return dictionary;
         }
 
+        /// <summary>
+        /// Consumption Calculation
+        /// </summary>
+        /// <param name="Distance"></param>
+        /// <param name="AircrafId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("/[controller]/Consumption/{Distance}/{AircrafId}")]
         public double Consumption(double Distance , int AircrafId)
@@ -131,13 +173,20 @@ namespace flight.Controllers
                 {
                     if(Airraft.FuelComsumption > 0)
                     {
-                        return Distance / Airraft.FuelComsumption;
+                        return Distance * Airraft.FuelComsumption;
                     }
                 }
             }
             return 0;
         }
 
+
+        /// <summary>
+        /// Distance Calculation between two airports
+        /// </summary>
+        /// <param name="depart"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("/[controller]/Distance/{depart}/{destination}")]
         public double CalculerDistance(int depart, int destination)
@@ -153,6 +202,16 @@ namespace flight.Controllers
                 return 0;
         }
 
+
+        /// <summary>
+        /// Distance Calculation function of GPS positions 
+        /// </summary>
+        /// <param name="lat1"></param>
+        /// <param name="lon1"></param>
+        /// <param name="lat2"></param>
+        /// <param name="lon2"></param>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         private  double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
         {
             double rlat1 = Math.PI * lat1 / 180;

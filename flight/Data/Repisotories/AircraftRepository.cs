@@ -11,14 +11,27 @@ namespace flight.Data.Repisotories
     public class AircraftRepository : IAircraftRepository
     {
         private AppDbContext _appdbcontext;
+
+        /// <summary>
+        /// initialisation DBcontext
+        /// </summary>
+        /// <param name="appdbcontext"></param>
         public AircraftRepository(AppDbContext appdbcontext)
         {
             _appdbcontext = appdbcontext; 
         }
 
+        /// <summary>
+        /// Aircraft list
+        /// </summary>
         IEnumerable<Aircraft> IAircraftRepository.Aircrafts =>
             _appdbcontext.Aircrafts.OrderBy(a=>a.AircraftId);
 
+        /// <summary>
+        /// To Add a new aircraft
+        /// </summary>
+        /// <param name="aircraft"></param>
+        /// <returns></returns>
         int IAircraftRepository.Add(Aircraft aircraft)
         {
             try
@@ -34,12 +47,22 @@ namespace flight.Data.Repisotories
             }
         }
 
+        /// <summary>
+        /// Get aircraft by ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         Aircraft IAircraftRepository.GetAircraft(int Id)
         {
             var aircraft = _appdbcontext.Aircrafts.FirstOrDefault(a => a.AircraftId == Id);
             return aircraft;
         }
 
+        /// <summary>
+        /// To Update a new aircraft
+        /// </summary>
+        /// <param name="aircraft"></param>
+        /// <returns></returns>
         int IAircraftRepository.Update(Aircraft aircraft)
         {
             try

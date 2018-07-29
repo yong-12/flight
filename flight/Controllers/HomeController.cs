@@ -12,11 +12,20 @@ namespace flight.Controllers
     {
         private readonly IFlightRepository _flightRepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="flightRepository"></param>
         public HomeController(IFlightRepository flightRepository)
         {
             _flightRepository = flightRepository;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             var mv = new FlightsViewModel()

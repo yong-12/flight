@@ -13,25 +13,27 @@ namespace flight.Data.Model
 
         public Aircraft Aircraft { get; set; }
 
-        [Display(Name ="Aircraft")]
+        [Display(Name ="Aircraft :")]
         public  int AircraftId { get; set; }
 
         public virtual Airport AirportDepart { get; set; }
 
-        [Display(Name ="Airport Depart")]
+        [Display(Name ="Airport Depart :")]
         public int AirportDepartId { get; set; }
 
         public virtual Airport AirportDestination { get; set; }
 
-        [Display(Name ="Airport Destination")]
+        [Display(Name ="Airport Destination :")]
         public int AirportDestinationId { get; set; }
 
-        [Display(Name = "Fuel Needed")]
+        
         [Required]
+        [Display(Name = "Fuel Needed in Liter :")]
         public double FuelNeeded { get; set; }
 
-        [Display(Name = "Distance (Km)")]
+       
         [Required]
+        [Display(Name = "Distance (Km) :")]
         public double Distance { get; set; }
     }
 }

@@ -12,11 +12,20 @@ namespace flight.Controllers
     public class AirportController : Controller
     {
         private readonly IAirportRepository _areportrepository;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="areportrepository"></param>
         public AirportController(IAirportRepository areportrepository)
         {
             _areportrepository = areportrepository;
         }
 
+        /// <summary>
+        /// Airport List redirection
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             var List = _areportrepository.Airports;
@@ -27,12 +36,21 @@ namespace flight.Controllers
             return View(mv);
         }
 
+        /// <summary>
+        /// Create new airport
+        /// </summary>
+        /// <returns></returns>
         public ViewResult New()
         {
             var airport = new Airport();
             return View("AirportForm", airport);
         }
 
+        /// <summary>
+        /// Save or Update airport Data
+        /// </summary>
+        /// <param name="airport"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Airport airport)
@@ -53,12 +71,22 @@ namespace flight.Controllers
         }
 
 
+        /// <summary>
+        /// Data recuperation for airport edition
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public ActionResult Edit(int Id)
         {
             var airport = _areportrepository.GetAirport(Id);
             return View("AirportForm", airport);
         }
 
+
+        /// <summary>
+        /// Api Get airport list 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Airport> GetList()
         {

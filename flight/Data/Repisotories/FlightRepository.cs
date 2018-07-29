@@ -11,22 +11,40 @@ namespace flight.Data.Repisotories
     public class FlightRepository : IFlightRepository
     {
         private readonly AppDbContext _appDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="appDbContext"></param>
         public FlightRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
+
+        /// <summary>
+        /// Flight list
+        /// </summary>
         IEnumerable<Flight> IFlightRepository.Flights =>
             _appDbContext.Flights.Include( a => a.Aircraft)
                                   .Include(a => a.AirportDepart)
                                   .Include(a => a.AirportDestination)
             .OrderBy(f => f.FlightId);
 
+        /// <summary>
+        ///  To Add a new flight
+        /// </summary>
+        /// <param name="flight"></param>
         void IFlightRepository.AddFlight(Flight flight)
         {
             _appDbContext.Flights.Add(flight);
             _appDbContext.SaveChanges();
         }
 
+        /// <summary>
+        /// Get Flight by ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         Flight IFlightRepository.GetFlight(int Id)
         {
             return _appDbContext.Flights.Include(a => a.Aircraft)
@@ -35,6 +53,10 @@ namespace flight.Data.Repisotories
                                   .FirstOrDefault(f => f.FlightId == Id);
         }
 
+        /// <summary>
+        /// To Update a new flight
+        /// </summary>
+        /// <param name="flight"></param>
         void IFlightRepository.UpdateFlight(Flight flight)
         {
             var flightDB = _appDbContext.Flights.Single(f => f.FlightId == flight.FlightId);

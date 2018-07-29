@@ -17,7 +17,7 @@ namespace flight.Data.Model
 
         [Required]
         [Range(1,10000000)]
-        [Display(Name = "Fuel Comsumption")]
+        [Display(Name = "Fuel Comsumption per 1Km")]
         public Double FuelComsumption { get; set; }
     }
 }

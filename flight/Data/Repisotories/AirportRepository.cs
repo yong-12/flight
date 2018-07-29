@@ -10,14 +10,26 @@ namespace flight.Data.Repisotories
     public class AirportRepository : IAirportRepository
     {
         private readonly AppDbContext _appDbContext;
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="appDbContext"></param>
         public AirportRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        IEnumerable<Airport> IAirportRepository.Airports =>  _appDbContext.Airports.OrderBy(a => a.AirportId); 
-       
+        /// <summary>
+        /// Airport list
+        /// </summary>
+        IEnumerable<Airport> IAirportRepository.Airports =>  _appDbContext.Airports.OrderBy(a => a.AirportId);
 
+        /// <summary>
+        /// To Add a new airport
+        /// </summary>
+        /// <param name="airport"></param>
+        /// <returns></returns>
         int IAirportRepository.Add(Airport airport)
         {
             try
@@ -34,11 +46,21 @@ namespace flight.Data.Repisotories
             
         }
 
+        /// <summary>
+        /// Get Airport by ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         Airport IAirportRepository.GetAirport(int Id)
         {
             return _appDbContext.Airports.FirstOrDefault(a => a.AirportId == Id);
         }
 
+        /// <summary>
+        /// To Update a new airport
+        /// </summary>
+        /// <param name="airport"></param>
+        /// <returns></returns>
         int IAirportRepository.Update(Airport airport)
         {
             try

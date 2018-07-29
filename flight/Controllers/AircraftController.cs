@@ -14,11 +14,19 @@ namespace flight.Controllers
     {
         private readonly IAircraftRepository _aircraftrepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aircraftrepository"></param>
         public AircraftController(IAircraftRepository aircraftrepository)
         {
             _aircraftrepository = aircraftrepository;
         }
 
+        /// <summary>
+        /// aircraft list
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -31,12 +39,21 @@ namespace flight.Controllers
 
         }
 
+        /// <summary>
+        /// new aircraft
+        /// </summary>
+        /// <returns></returns>
         public ViewResult New()
         {
             var aircraft = new Aircraft();
             return View("AircraftForm", aircraft);
         }
 
+        /// <summary>
+        /// Save or update aircraft data
+        /// </summary>
+        /// <param name="aircraft"></param>
+        /// <returns></returns>
         [HttpPost]
         public  ActionResult Save(Aircraft aircraft)
         {
@@ -46,8 +63,8 @@ namespace flight.Controllers
                 return View("AircraftForm", aircraft);
             }
 
-            //If is new aircraft we save it in the data base
-            //else we update the aircraft 
+            //If it is new a aircraft we save it in the data base
+            //if its not the case, we update the aircraft 
             if (aircraft.AircraftId ==0)
             {
                 _aircraftrepository.Add(aircraft);
@@ -57,7 +74,11 @@ namespace flight.Controllers
             return RedirectToAction("Index");
         }
 
-        
+        /// <summary>
+        /// Data recuperation for aircraft edition
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
 
         public ActionResult Edit(int Id)
         {
@@ -65,6 +86,11 @@ namespace flight.Controllers
             return View("AircraftForm", aircraft);
         }
 
+
+        /// <summary>
+        /// Api Get aircraft list 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Aircraft> GetList()
         {
