@@ -96,5 +96,15 @@ namespace flight.Controllers
         {
             return _aircraftrepository.Aircrafts.ToList();
         }
+
+        /// <summary>
+        /// Api Delete aircraft   
+        /// </summary>
+        /// <param name="Id"></param>
+        [HttpDelete]
+        public bool Delete(int Id)
+        {
+            return _aircraftrepository.Remove(Id);
+        }
     }
 }

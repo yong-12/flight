@@ -12,6 +12,6 @@ namespace flight.Data.Interfaces
         int Add(Aircraft aircraft);
         Aircraft GetAircraft(int id);
         int Update(Aircraft aircraft);
-        
+        bool Remove(int id);
     }
 }

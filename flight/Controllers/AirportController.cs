@@ -93,5 +93,15 @@ namespace flight.Controllers
             return _areportrepository.Airports.ToList();
         }
 
+        /// <summary>
+        /// Api Delete airport   
+        /// </summary>
+        /// <param name="Id"></param>
+        [HttpDelete]
+        public bool Delete(int Id)
+        {
+              return _areportrepository.Remove(Id);
+        }
+
     }
 }

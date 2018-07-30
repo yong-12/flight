@@ -12,6 +12,6 @@ namespace flight.Data.Interfaces
         int Add(Airport airport);
         int Update(Airport airport);
         Airport GetAirport(int Id);
-
+        bool Remove(int id);
     }
 }

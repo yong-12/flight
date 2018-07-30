@@ -54,7 +54,7 @@ namespace flight.Data.Repisotories
         }
 
         /// <summary>
-        /// To Update a new flight
+        /// To Update flight
         /// </summary>
         /// <param name="flight"></param>
         void IFlightRepository.UpdateFlight(Flight flight)
@@ -69,6 +69,30 @@ namespace flight.Data.Repisotories
                 flightDB.Distance = flight.Distance;
                 _appDbContext.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// To Delete Flight
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool Remove(int Id)
+        {
+            try
+            {
+                var FlightDB = _appDbContext.Flights.FirstOrDefault(a => a.FlightId == Id);
+                if (FlightDB == null)
+                    return false;
+                _appDbContext.Remove(FlightDB);
+                _appDbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw;
+            }
+            
         }
     }
 }

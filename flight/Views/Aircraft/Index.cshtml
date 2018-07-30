@@ -16,26 +16,17 @@
             <th scope="col"> Aircraft </th>
             <th scope="col"> Fuel Comsumption </th>
             <th>Edit</th>
-            @*<th>Delete</th>*@
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-        @*@foreach (var item in Model.Aircrafts)
-        {
-            <tr>
-                <td class="row">
-                    @Html.ActionLink(item.Name, "Edit", "Aircraft", new { Id = item.AircraftId }, null)
-                </td>
-                <td class="row">@item.FuelComsumption</td>
-            </tr>
-        }*@
     </tbody>
 </table>
 <ul></ul>
 
 <script>
     $(document).ready(function () {
-        $("#Aircrafts").DataTable({
+        var table = $("#Aircrafts").DataTable({
             "processing": true, // for show progress bar
             "serverSide": false, // for process server side
             "filter": true, // this is for disable filter (search box)
@@ -59,8 +50,42 @@
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Aircraft/Edit/' + full.AircraftId + '">Edit</a>'; }
                 },
+                {
+                    data: "AircraftId",
+                    render: function (data) {
+                        return "<button class='btn btn-danger' data-Aircraft-id=" + data + ">Delete</button>";
+                    }
+                }
             ]
 
         });
+
+        $("#Aircrafts").on("click", ".btn-danger", function () {
+            var button = $(this); 
+
+            if (confirm("Are you sure you want to delete ...?")) {
+                //Delete();
+
+                $.ajax({
+                    url: "/Aircraft/Delete/?Id=" + button.attr("data-Aircraft-id"),
+                    method: "DELETE",
+                    success: function (data) {
+                        if (data == true) {
+                            // console.log("success");
+                            table.row(button.parents("tr")).remove().draw();
+                        } else {
+                            //console.log("data =" + data);
+                            alert('error :You can not delete , element used in the system !');
+                        } 
+                    } 
+                }); 
+            }
+            else {
+                return false;
+            }
+        });
+
+
     });
+
 </script> 

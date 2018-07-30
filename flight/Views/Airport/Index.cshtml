@@ -16,6 +16,7 @@
             <th scope="col"> Latitude </th>
             <th scope="col"> Longitude </th>
             <th scope="col"> Edit </th>
+            <th scope="col"> Delete </th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +34,7 @@
 </table>
 <script>
     $(document).ready(function () {
-        $("#Airport").DataTable({
+        var table = $("#Airport").DataTable({
             "processing": true, // for show progress bar
             "serverSide": false, // for process server side
             "filter": true, // this is for disable filter (search box)
@@ -58,8 +59,43 @@
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Airport/Edit/' + full.AirportId + '">Edit</a>'; }
                 },
+                {
+                    data: "AirportId",
+                    render: function (data) {
+                        return "<button class='btn btn-danger' data-Airport-id=" + data + ">Delete</button>";
+                    }
+                }
             ]
 
         });
+
+
+        $("#Airport").on("click", ".btn-danger", function () {
+            var button = $(this);
+
+            if (confirm("Are you sure you want to delete ...?")) {
+                //Delete();
+
+                $.ajax({
+                    url: "/Airport/Delete/?Id=" + button.attr("data-Airport-id"),
+                    method: "DELETE",
+                    success: function (data) {
+                        if (data == true) {
+                            // console.log("success");
+                            table.row(button.parents("tr")).remove().draw();
+                        } else {
+                            //console.log("data=" + data);
+                            //console.log("data.success =" + data.success);
+                            alert('error :You can not delete , element used in the system !');
+
+                        }
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+        });
+
     });
 </script> 

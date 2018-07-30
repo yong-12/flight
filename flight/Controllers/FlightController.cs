@@ -110,7 +110,18 @@ namespace flight.Controllers
 
             return View("Index", mv);
         }
-        
+
+        /// <summary>
+        /// Api Delete flight   
+        /// </summary>
+        /// <param name="Id"></param>
+        [HttpDelete]
+        public bool Delete(int Id)
+        {
+            return _flightRepository.Remove(Id);
+        }
+
+
         /// <summary>
         /// 
         /// </summary>

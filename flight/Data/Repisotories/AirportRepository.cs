@@ -57,7 +57,7 @@ namespace flight.Data.Repisotories
         }
 
         /// <summary>
-        /// To Update a new airport
+        /// To Update  airport
         /// </summary>
         /// <param name="airport"></param>
         /// <returns></returns>
@@ -79,6 +79,32 @@ namespace flight.Data.Repisotories
                 return -1;
                 throw;
             }
+        }
+
+
+        /// <summary>
+        /// To Delete airport
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool Remove(int Id)
+        {
+            try
+            {
+                var AirportDB = _appDbContext.Airports.FirstOrDefault(a => a.AirportId == Id);
+                if (AirportDB == null)
+                    return false;
+
+                _appDbContext.Remove(AirportDB);
+                _appDbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw;
+            }
+            
         }
     }
 }

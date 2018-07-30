@@ -59,7 +59,7 @@ namespace flight.Data.Repisotories
         }
 
         /// <summary>
-        /// To Update a new aircraft
+        /// To Update a  aircraft
         /// </summary>
         /// <param name="aircraft"></param>
         /// <returns></returns>
@@ -73,12 +73,35 @@ namespace flight.Data.Repisotories
                 _appdbcontext.SaveChanges();
                 return aircraftDB.AircraftId;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return -1;
                 throw;
             }
-           
+        }
+
+        /// <summary>
+        /// To Delete aircraft
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool Remove(int Id)
+        {
+            try
+            {
+                var aircraftDB = _appdbcontext.Aircrafts.FirstOrDefault(a => a.AircraftId == Id);
+                if (aircraftDB == null)
+                    return false;
+                _appdbcontext.Remove(aircraftDB);
+                _appdbcontext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+            
         }
     }
 }

@@ -19,31 +19,18 @@
             <th scope="col"> Fuel Needed </th>
             <th scope="col"> Distance </th>
             <th scope="col"> Edit </th>
+            <th scope="col"> Delete </th>
         </tr>
     </thead>
     <tbody>
-        @*@foreach (var item in Model.Flights)
-        {
-            <tr>
-                <td class="row">
-                    @item.Aircraft.Name
-                </td>
-                <td class="row">@item.AirportDepart.Name</td>
-                <td class="row">@item.AirportDestination.Name</td>
-                <td class="row">@item.FuelNeeded</td>
-                <td class="row">@item.Distance</td>
-                <td class="row">
-                    @Html.ActionLink("Edit", "Edit", "Flight", new { Id = item.FlightId }, new { @class = "glyphicon glyphicon-edit" })
-                </td>
-            </tr>
-        }*@
+    
     </tbody>
 </table>
 
 
 <script>
     $(document).ready(function () {
-        $("#Flights").DataTable({
+        var table = $("#Flights").DataTable({
             "processing": true, // for show progress bar
             "serverSide": false, // for process server side
             "filter": true, // this is for disable filter (search box)
@@ -70,8 +57,40 @@
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Flight/Edit/' + full.FlightId + '">Edit</a>'; }
                 },
+                {
+                    data: "FlightId",
+                    render: function (data) {
+                        return "<button class='btn btn-danger' data-Flight-id=" + data + ">Delete</button>";
+                    }
+                }
             ]
 
+        });
+
+        $("#Flights").on("click", ".btn-danger", function () {
+            var button = $(this);
+
+            if (confirm("Are you sure you want to delete ...?")) {
+                //Delete();
+
+                $.ajax({
+                    url: "/Flight/Delete/?Id=" + button.attr("data-Flight-id"),
+                    method: "DELETE",
+                    success: function (data) {
+                        if (data == true) {
+                            // console.log("success");
+                            table.row(button.parents("tr")).remove().draw();
+                        } else {
+                            //console.log("data =" + data);
+                            alert('error :You can not delete , element used in the system !');
+
+                        }
+                    }
+                });
+            }
+            else {
+                return false;
+            }
         });
     });
 </script> 

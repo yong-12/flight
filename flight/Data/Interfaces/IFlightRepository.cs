@@ -12,5 +12,6 @@ namespace flight.Data.Interfaces
         Flight GetFlight(int Id);
         void AddFlight(Flight flight);
         void UpdateFlight(Flight flight);
+        bool Remove(int id);
     }
 }
